@@ -5,13 +5,6 @@ public class Player : MonoBehaviour {
 
 	public bool isControllable;
 
-	void Awake()
-	{
-		this.GetComponentInChildren<OpenDiveSensor>().cameraleft.enabled = false;
-		this.GetComponentInChildren<OpenDiveSensor>().cameraright.enabled = false;
-
-	}
-
 	//This is a really simple script to move the player around,
 	//nothing you can't already do :)
 	void Update () {

@@ -20,6 +20,13 @@ public class CharacterControllerAndroid : MonoBehaviour {
 		thalmicMyo = myo.GetComponent<ThalmicMyo> ();
 		resetMyoOrientation ();
 	}
+
+	void Awake()
+	{
+		this.GetComponentInChildren<OpenDiveSensor>().cameraleft.enabled = false;
+		this.GetComponentInChildren<OpenDiveSensor>().cameraright.enabled = false;
+		
+	}
 	
 	// Update is called once per frame
 	void Update () {

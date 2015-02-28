@@ -61,6 +61,8 @@ public class NetworkManager : MonoBehaviour {
 				//If it's our player being created allow control and set the reference
 				if( senderID == DarkRiftAPI.id ){
 					clone.GetComponent<CharacterControllerAndroid>().isControllable = true;
+					clone.GetComponentInChildren<OpenDiveSensor>().cameraleft.enabled = true;
+					clone.GetComponentInChildren<OpenDiveSensor>().cameraright.enabled = true;
 					player = clone.transform;
 				}
 			}

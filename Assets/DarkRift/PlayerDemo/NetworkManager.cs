@@ -51,14 +51,13 @@ public class NetworkManager : MonoBehaviour {
 				//Basically reply to them.
 				DarkRiftAPI.SendMessageToID(senderID, TagIndex.Controller, TagIndex.ControllerSubjects.SpawnPlayer, player.position);
 			}
-
 			//Then if it has a spawn subject we need to spawn a player
 			if( subject == TagIndex.ControllerSubjects.SpawnPlayer ){
 				//Instantiate the player
 				GameObject clone = (GameObject)Instantiate(playerObject, (Vector3)data, Quaternion.identity);
+
 				//Tell the network player who owns it so it tunes into the right updates.
 				clone.GetComponent<NetworkPlayer>().networkID = senderID;
-
 				//If it's our player being created allow control and set the reference
 				if( senderID == DarkRiftAPI.id ){
 					clone.GetComponent<CharacterControllerAndroid>().isControllable = true;

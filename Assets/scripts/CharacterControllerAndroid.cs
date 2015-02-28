@@ -23,24 +23,26 @@ public class CharacterControllerAndroid : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Time.time < 1)
-			resetMyoOrientation ();
+		if (isControllable) {
+						if (Time.time < 1)
+								resetMyoOrientation ();
 		
-		Vector3 newEulerAngles = myo.transform.rotation.eulerAngles;
-		if (newEulerAngles.x > 180)
-			newEulerAngles.x = newEulerAngles.x - 360;
-		if (newEulerAngles.y > 180)
-			newEulerAngles.y = newEulerAngles.y - 360;
-		if (newEulerAngles.z > 180)
-			newEulerAngles.z = newEulerAngles.z - 360;
-		newEulerAngles.x *= -1f;
-		newEulerAngles.z *= -1f;
-		newEulerAngles.y = 0f;
+						Vector3 newEulerAngles = myo.transform.rotation.eulerAngles;
+						if (newEulerAngles.x > 180)
+								newEulerAngles.x = newEulerAngles.x - 360;
+						if (newEulerAngles.y > 180)
+								newEulerAngles.y = newEulerAngles.y - 360;
+						if (newEulerAngles.z > 180)
+								newEulerAngles.z = newEulerAngles.z - 360;
+						newEulerAngles.x *= -1f;
+						newEulerAngles.z *= -1f;
+						newEulerAngles.y = 0f;
 		
-		transform.Rotate (new Vector3(angleCheck(lastRot.x, newEulerAngles.x), angleCheck(lastRot.y, newEulerAngles.y),
-		                              angleCheck(lastRot.z, newEulerAngles.z))*Time.deltaTime*rotSpeed*100);
-		transform.Translate (Vector3.forward * speed * Time.deltaTime);
-		lastRot = transform.rotation.eulerAngles;
+						transform.Rotate (new Vector3 (angleCheck (lastRot.x, newEulerAngles.x), angleCheck (lastRot.y, newEulerAngles.y),
+		                              angleCheck (lastRot.z, newEulerAngles.z)) * Time.deltaTime * rotSpeed * 100);
+						transform.Translate (Vector3.forward * speed * Time.deltaTime);
+						lastRot = transform.rotation.eulerAngles;
+				}
 	}
 	
 	void resetMyoOrientation()

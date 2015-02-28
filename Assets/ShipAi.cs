@@ -35,7 +35,7 @@ public class ShipAi : MonoBehaviour {
 				attack();
 				break;
 			case (State.EVADE):
-			evade();
+				evade();
 				break;
 		}
 		transform.Translate (Vector3.forward);

@@ -45,8 +45,6 @@ public class ColorBoxByPose : MonoBehaviour
                 renderer.material = waveInMaterial;
             } else if (thalmicMyo.pose == Pose.WaveOut) {
                 renderer.material = waveOutMaterial;
-            } else if (thalmicMyo.pose == Pose.ThumbToPinky) {
-                renderer.material = thumbToPinkyMaterial;
             }
         }
     }

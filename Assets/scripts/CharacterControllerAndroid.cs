@@ -12,6 +12,7 @@ public class CharacterControllerAndroid : MonoBehaviour {
 	public float turnThreshold = 1f;
 	private Vector3 lastRot = Vector3.zero;
 	ThalmicMyo thalmicMyo;
+	public bool isControllable = false;
 	
 	// Use this for initialization
 	void Start () {

@@ -61,7 +61,7 @@ public class NetworkManager : MonoBehaviour {
 
 				//If it's our player being created allow control and set the reference
 				if( senderID == DarkRiftAPI.id ){
-					clone.GetComponent<Player>().isControllable = true;
+					clone.GetComponent<CharacterControllerAndroid>().isControllable = true;
 					player = clone.transform;
 				}
 			}

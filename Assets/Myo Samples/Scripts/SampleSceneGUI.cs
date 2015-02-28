@@ -28,12 +28,16 @@ public class SampleSceneGUI : MonoBehaviour
             GUI.Label(new Rect (12, 8, Screen.width, Screen.height),
                 "No Myo currently paired."
             );
+        } else if (!thalmicMyo.armSynced) {
+            GUI.Label(new Rect (12, 8, Screen.width, Screen.height),
+                "Perform the Sync Gesture."
+            );
         } else {
             GUI.Label (new Rect (12, 8, Screen.width, Screen.height),
                 "Fist: Vibrate Myo armband\n" +
                 "Wave in: Set box material to blue\n" +
                 "Wave out: Set box material to green\n" +
-                "Thumb to pinky: Reset box material\n" +
+                "Double tap: Reset box material\n" +
                 "Fingers spread: Set forward direction"
             );
         }

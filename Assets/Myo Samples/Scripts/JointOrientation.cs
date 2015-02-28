@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using LockingPolicy = Thalmic.Myo.LockingPolicy;
 using Pose = Thalmic.Myo.Pose;
+using UnlockType = Thalmic.Myo.UnlockType;
+using VibrationType = Thalmic.Myo.VibrationType;
 
 // Orient the object to match that of the Myo armband.
 // Compensate for initial yaw (orientation about the gravity vector) and roll (orientation about
@@ -40,6 +43,8 @@ public class JointOrientation : MonoBehaviour
 
             if (thalmicMyo.pose == Pose.FingersSpread) {
                 updateReference = true;
+
+                ExtendUnlockAndNotifyUserAction(thalmicMyo);
             }
         }
         if (Input.GetKeyDown ("r")) {
@@ -92,7 +97,7 @@ public class JointOrientation : MonoBehaviour
                                                 -transform.localRotation.w);
         }
     }
-    
+
     // Compute the angle of rotation clockwise about the forward axis relative to the provided zero roll direction.
     // As the armband is rotated about the forward axis this value will change, regardless of which way the
     // forward vector of the Myo is pointing. The returned value will be between -180 and 180 degrees.
@@ -138,5 +143,18 @@ public class JointOrientation : MonoBehaviour
             return angle + 360.0f;
         }
         return angle;
+    }
+
+    // Extend the unlock if ThalmcHub's locking policy is standard, and notifies the given myo that a user action was
+    // recognized.
+    void ExtendUnlockAndNotifyUserAction (ThalmicMyo myo)
+    {
+        ThalmicHub hub = ThalmicHub.instance;
+
+        if (hub.lockingPolicy == LockingPolicy.Standard) {
+            myo.Unlock (UnlockType.Timed);
+        }
+
+        myo.NotifyUserAction ();
     }
 }

@@ -348,7 +348,7 @@ MonoBehaviour:
   myo: {fileID: 1201201557}
   waveInMaterial: {fileID: 2100000, guid: 2481aef9b23ed4d869d5fb417a44fefd, type: 2}
   waveOutMaterial: {fileID: 2100000, guid: beca7d66ce77b41769cf37f1a0f2c355, type: 2}
-  thumbToPinkyMaterial: {fileID: 2100000, guid: 1f16471eaab1a45bcbf5dbfddc3894d7, type: 2}
+  doubleTapMaterial: {fileID: 2100000, guid: 1f16471eaab1a45bcbf5dbfddc3894d7, type: 2}
 --- !u!33 &1036158884
 MeshFilter:
   m_ObjectHideFlags: 0

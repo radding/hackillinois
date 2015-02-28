@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using LockingPolicy = Thalmic.Myo.LockingPolicy;
 using Pose = Thalmic.Myo.Pose;
+using UnlockType = Thalmic.Myo.UnlockType;
 using VibrationType = Thalmic.Myo.VibrationType;
 
 // Change the material when certain poses are made with the Myo armband.
@@ -15,7 +17,7 @@ public class ColorBoxByPose : MonoBehaviour
     // Materials to change to when poses are made.
     public Material waveInMaterial;
     public Material waveOutMaterial;
-    public Material thumbToPinkyMaterial;
+    public Material doubleTapMaterial;
 
     // The pose from the last update. This is used to determine if the pose has changed
     // so that actions are only performed upon making them rather than every frame during
@@ -40,12 +42,35 @@ public class ColorBoxByPose : MonoBehaviour
             if (thalmicMyo.pose == Pose.Fist) {
                 thalmicMyo.Vibrate (VibrationType.Medium);
 
-            // Change material when wave in, wave out or thumb to pinky poses are made.
+                ExtendUnlockAndNotifyUserAction (thalmicMyo);
+
+            // Change material when wave in, wave out or double tap poses are made.
             } else if (thalmicMyo.pose == Pose.WaveIn) {
                 renderer.material = waveInMaterial;
+
+                ExtendUnlockAndNotifyUserAction (thalmicMyo);
             } else if (thalmicMyo.pose == Pose.WaveOut) {
                 renderer.material = waveOutMaterial;
+
+                ExtendUnlockAndNotifyUserAction (thalmicMyo);
+            } else if (thalmicMyo.pose == Pose.DoubleTap) {
+                renderer.material = doubleTapMaterial;
+
+                ExtendUnlockAndNotifyUserAction (thalmicMyo);
             }
         }
+    }
+
+    // Extend the unlock if ThalmcHub's locking policy is standard, and notifies the given myo that a user action was
+    // recognized.
+    void ExtendUnlockAndNotifyUserAction (ThalmicMyo myo)
+    {
+        ThalmicHub hub = ThalmicHub.instance;
+
+        if (hub.lockingPolicy == LockingPolicy.Standard) {
+            myo.Unlock (UnlockType.Timed);
+        }
+
+        myo.NotifyUserAction ();
     }
 }

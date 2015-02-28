@@ -6,6 +6,8 @@ using UnityEditor;
 
 using System.Collections.Generic;
 
+using LockingPolicy = Thalmic.Myo.LockingPolicy;
+
 // Allows access to one or more Myo armbands, which must be immediate children of the GameObject this script is attached
 // to. ThalmicHub is a singleton; only one ThalmicHub instance is allowed in a scene, which can be accessed through
 // ThalmicHub.instance. ThalmicHub will persist across scene changes.
@@ -24,6 +26,9 @@ public class ThalmicHub : MonoBehaviour
     // the application is named hello-world, one could use "com.example.hello-world" as a valid application identifier.
     // applicationIdentifier can an empty string.
     public string applicationIdentifier = "com.example.myo-unity";
+
+    // If set to None, pose events are always sent. If set to Standard, pose events are not sent while a Myo is locked.
+    public LockingPolicy lockingPolicy;
 
     // True if and only if the hub initialized successfully; typically this is set during Awake, but it can also be
     // set by calling ResetHub() explicitly. The typical reason for initialization to fail is that Myo Connect is not
@@ -115,6 +120,8 @@ public class ThalmicHub : MonoBehaviour
     private bool createHub () {
         try {
             _hub = new Thalmic.Myo.Hub (applicationIdentifier, hub_MyoPaired);
+
+            _hub.SetLockingPolicy (lockingPolicy);
         } catch (System.Exception) {
             Debug.Log ("ThalmicHub failed to initialize.");
             return false;

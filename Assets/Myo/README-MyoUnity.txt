@@ -26,7 +26,7 @@ a scene change occurs.
 
 The ThalmicMyo script provides several properties relating to the Myo armband's
 current state, including:
- - armRecognized - whether or not the Myo armband has detected that it is on an arm.
+ - armSynced - whether or not the Myo armband has detected that it is on an arm.
  - arm - the arm that the Myo armband is on, e.g. Arm.Left if being worn on the left arm.
  - xDirection - the current direction of the Myo armband's +x axis relative to the arm.
  - pose - the current pose detected by the Myo armband, e.g. Pose.Fist if the wearer

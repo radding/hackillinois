@@ -18,9 +18,9 @@ namespace Thalmic.Myo
         public DateTime Timestamp { get; private set; }
     }
 
-    public class ArmRecognizedEventArgs : MyoEventArgs
+    public class ArmSyncedEventArgs : MyoEventArgs
     {
-        public ArmRecognizedEventArgs(Myo myo, DateTime timestamp, Arm arm, XDirection xDirection)
+        public ArmSyncedEventArgs(Myo myo, DateTime timestamp, Arm arm, XDirection xDirection)
             : base(myo, timestamp)
         {
             this.Arm = arm;

@@ -51,6 +51,17 @@ namespace Thalmic.Myo
                    CallingConvention = CallingConvention.Cdecl)]
         public static extern Result shutdown_hub(IntPtr hub, IntPtr error);
 
+        public enum LockingPolicy
+        {
+            None,
+            Standard
+        }
+
+        [DllImport(MYO_DLL,
+                   EntryPoint = "libmyo_set_locking_policy",
+                   CallingConvention = CallingConvention.Cdecl)]
+        public static extern Result set_locking_policy(IntPtr hub, LockingPolicy lockingPolicy, IntPtr error);
+
         public enum VibrationType
         {
             Short,
@@ -75,9 +86,35 @@ namespace Thalmic.Myo
             WaveIn = 2,
             WaveOut = 3,
             FingersSpread = 4,
-            ThumbToPinky = 6,
+            DoubleTap = 5,
             Unknown = 0xffff
         }
+
+        public enum UnlockType
+        {
+            Timed = 0,
+            Hold = 1
+        }
+
+        [DllImport(MYO_DLL,
+                   EntryPoint = "libmyo_myo_unlock",
+                   CallingConvention = CallingConvention.Cdecl)]
+        public static extern void myo_unlock(IntPtr myo, UnlockType unlockType, IntPtr error);
+
+        [DllImport(MYO_DLL,
+                   EntryPoint = "libmyo_myo_lock",
+                   CallingConvention = CallingConvention.Cdecl)]
+        public static extern void myo_lock(IntPtr myo, IntPtr error);
+
+        public enum UserActionType
+        {
+            Single = 0
+        }
+
+        [DllImport(MYO_DLL,
+                   EntryPoint = "libmyo_myo_notify_user_action",
+                   CallingConvention = CallingConvention.Cdecl)]
+        public static extern void myo_notify_user_action(IntPtr myo, UserActionType type, IntPtr error);
 
         public enum EventType
         {
@@ -85,11 +122,13 @@ namespace Thalmic.Myo
             Unpaired,
             Connected,
             Disconnected,
-            ArmRecognized,
-            ArmLost,
+            ArmSynced,
+            ArmUnsynced,
             Orientation,
             Pose,
-            Rssi
+            Rssi,
+            Unlocked,
+            Locked
         }
 
         [DllImport(MYO_DLL,

@@ -67,6 +67,11 @@ namespace Thalmic.Myo
             Dispose(false);
         }
 
+        public void SetLockingPolicy(LockingPolicy lockingPolicy)
+        {
+            libmyo.set_locking_policy(_handle, (libmyo.LockingPolicy)lockingPolicy, IntPtr.Zero);
+        }
+
         public event EventHandler<MyoEventArgs> Paired;
 
         internal void StartEventThread()
@@ -123,5 +128,11 @@ namespace Thalmic.Myo
 
             return libmyo.HandlerResult.Continue;
         }
+    }
+
+    public enum LockingPolicy
+    {
+        None,
+        Standard
     }
 }

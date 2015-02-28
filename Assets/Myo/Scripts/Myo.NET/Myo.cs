@@ -23,9 +23,9 @@ namespace Thalmic.Myo
 
         public event EventHandler<MyoEventArgs> Disconnected;
 
-        public event EventHandler<ArmRecognizedEventArgs> ArmRecognized;
+        public event EventHandler<ArmSyncedEventArgs> ArmSynced;
 
-        public event EventHandler<MyoEventArgs> ArmLost;
+        public event EventHandler<MyoEventArgs> ArmUnsynced;
 
         public event EventHandler<PoseEventArgs> PoseChange;
 
@@ -36,6 +36,10 @@ namespace Thalmic.Myo
         public event EventHandler<GyroscopeDataEventArgs> GyroscopeData;
 
         public event EventHandler<RssiEventArgs> Rssi;
+
+        public event EventHandler<MyoEventArgs> Unlocked;
+
+        public event EventHandler<MyoEventArgs> Locked;
 
         internal Hub Hub
         {
@@ -57,6 +61,21 @@ namespace Thalmic.Myo
             libmyo.request_rssi(_handle, IntPtr.Zero);
         }
 
+        public void Unlock(UnlockType type)
+        {
+            libmyo.myo_unlock(_handle, (libmyo.UnlockType)type, IntPtr.Zero);
+        }
+
+        public void Lock()
+        {
+            libmyo.myo_lock(_handle, IntPtr.Zero);
+        }
+
+        public void NotifyUserAction()
+        {
+            libmyo.myo_notify_user_action(_handle, libmyo.UserActionType.Single, IntPtr.Zero);
+        }
+
         internal void HandleEvent(libmyo.EventType type, DateTime timestamp, IntPtr evt)
         {
             switch (type)
@@ -75,20 +94,20 @@ namespace Thalmic.Myo
                     }
                     break;
 
-                case libmyo.EventType.ArmRecognized:
-                    if (ArmRecognized != null)
+                case libmyo.EventType.ArmSynced:
+                    if (ArmSynced != null)
                     {
                         Arm arm = (Arm)libmyo.event_get_arm(evt);
                         XDirection xDirection = (XDirection)libmyo.event_get_x_direction(evt);
 
-                        ArmRecognized(this, new ArmRecognizedEventArgs(this, timestamp, arm, xDirection));
+                        ArmSynced(this, new ArmSyncedEventArgs(this, timestamp, arm, xDirection));
                     }
                     break;
 
-                case libmyo.EventType.ArmLost:
-                    if (ArmLost != null)
+                case libmyo.EventType.ArmUnsynced:
+                    if (ArmUnsynced != null)
                     {
-                        ArmLost(this, new MyoEventArgs(this, timestamp));
+                        ArmUnsynced(this, new MyoEventArgs(this, timestamp));
                     }
                     break;
 
@@ -138,6 +157,18 @@ namespace Thalmic.Myo
                         Rssi(this, new RssiEventArgs(this, timestamp, rssi));
                     }
                     break;
+                case libmyo.EventType.Unlocked:
+                    if (Unlocked != null)
+                    {
+                        Unlocked(this, new MyoEventArgs(this, timestamp));
+                    }
+                    break;
+                case libmyo.EventType.Locked:
+                    if (Locked != null)
+                    {
+                        Locked(this, new MyoEventArgs(this, timestamp));
+                    }
+                    break;
             }
         }
     }
@@ -161,5 +192,11 @@ namespace Thalmic.Myo
         Short,
         Medium,
         Long
+    }
+
+    public enum UnlockType
+    {
+        Timed = 0,  ///< Unlock for a fixed period of time.
+        Hold = 1    ///< Unlock until explicitly told to re-lock.
     }
 }

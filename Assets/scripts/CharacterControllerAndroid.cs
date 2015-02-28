@@ -15,6 +15,7 @@ public class CharacterControllerAndroid : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		myo = GameObject.FindWithTag ("Myo");
 		thalmicMyo = myo.GetComponent<ThalmicMyo> ();
 		resetMyoOrientation ();
 	}

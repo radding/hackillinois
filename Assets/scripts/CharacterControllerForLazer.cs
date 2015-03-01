@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharacterController : MonoBehaviour {
+public class CharacterControllerForLazer : MonoBehaviour {
 
 	public float speed = 10.0f;
 	public float rotSpeed = 1.0f;

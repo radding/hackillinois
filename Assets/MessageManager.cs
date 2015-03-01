@@ -3,10 +3,11 @@ using System.Collections;
 
 public class MessageManager : MonoBehaviour {
 	Vector3 newEulerAngles = Vector3.zero;
+	GameObject myo;
 
 	// Use this for initialization
 	void Start () {
-		
+		myo = GameObject.FindWithTag ("Myo");
 	}
 	
 	// Update is called once per frame
@@ -16,10 +17,12 @@ public class MessageManager : MonoBehaviour {
 
 	public void MyoRotation(string param)
 	{
+		//if (param != null)
+		//{
 		string[] arr = param.Split (' ');
-		Quaternion tmpRot = new Quaternion(float.Parse (arr [0]), float.Parse (arr [1]), float.Parse (arr [2]), float.Parse (arr [3]));
-		newEulerAngles = tmpRot.eulerAngles;
+		myo.transform.localRotation = new Quaternion(float.Parse (arr [0]), float.Parse (arr [1]), float.Parse (arr [2]), float.Parse (arr [3]));
+		//}
 	}
 
-	public Vector3 GetMyoRotation() {return newEulerAngles;}
+	//public Quaternion GetMyoRotation() {return newEulerAngles;}
 }

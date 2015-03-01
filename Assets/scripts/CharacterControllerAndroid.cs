@@ -27,8 +27,8 @@ public class CharacterControllerAndroid : MonoBehaviour {
 
 	void Awake()
 	{
-		this.GetComponentInChildren<OpenDiveSensor>().cameraleft.enabled = false;
-		this.GetComponentInChildren<OpenDiveSensor>().cameraright.enabled = false;
+//		this.GetComponentInChildren<OpenDiveSensor>().cameraleft.enabled = false;
+//		this.GetComponentInChildren<OpenDiveSensor>().cameraright.enabled = false;
 
 	}
 
@@ -40,9 +40,9 @@ public class CharacterControllerAndroid : MonoBehaviour {
 			if (Time.time < 1)
 					resetMyoOrientation ();
 
-			if (messageManager.GetMyoRotation() != Vector3.zero)
-			    newEulerAngles = messageManager.GetMyoRotation();
-			else
+			//if (messageManager.GetMyoRotation() != Vector3.zero)
+			//    newEulerAngles = messageManager.GetMyoRotation().eulerAngles;
+			//else
 				newEulerAngles = myo.transform.rotation.eulerAngles;
 
 						if (newEulerAngles.x > 180)

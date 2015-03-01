@@ -42,9 +42,9 @@ public class CharacterControllerForLazer : MonoBehaviour {
 			if(hit.collider.gameObject.GetComponent<Health>())
 				hit.collider.gameObject.GetComponent<Health>().hurt();
 		}
-		GameObject clone = (GameObject)Instantiate (ammo, transform.position, Quaternion.Euler(transform.eulerAngles));
-//		clone.transform.eulerAngles = ;
-//		clone.transform.localRotation = transform.localRotation;
+		Quaternion yerMum = Quaternion.FromToRotation(new Vector3(0,0,1), transform.forward);
+		GameObject clone = (GameObject)Instantiate (ammo, transform.position, yerMum);
+
 		
 	}
 }

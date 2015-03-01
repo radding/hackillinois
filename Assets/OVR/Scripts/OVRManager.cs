@@ -370,7 +370,7 @@ public class OVRManager : MonoBehaviour
 		}
 
 		// We want to set up our touchpad messaging system
-		OVRTouchpad.Create();
+//		OVRTouchpad.Create();
 		// This will trigger the init on the render thread
 		InitRenderThread();
 #else

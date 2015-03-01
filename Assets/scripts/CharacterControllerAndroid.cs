@@ -12,10 +12,14 @@ public class CharacterControllerAndroid : MonoBehaviour {
 	public float turnThreshold = 1f;
 	private Vector3 lastRot = Vector3.zero;
 	ThalmicMyo thalmicMyo;
-	public bool isControllable = false;
+	public bool isControllable = true;
+	Vector3 newEulerAngles = Vector3.zero;
+	MessageManager messageManager;
 	
 	// Use this for initialization
 	void Start () {
+		GameObject messManager = GameObject.FindWithTag ("MessageManager");
+		messageManager = messManager.GetComponent<MessageManager> ();
 		myo = GameObject.FindWithTag ("Myo");
 		thalmicMyo = myo.GetComponent<ThalmicMyo> ();
 		resetMyoOrientation ();
@@ -25,16 +29,22 @@ public class CharacterControllerAndroid : MonoBehaviour {
 	{
 		this.GetComponentInChildren<OpenDiveSensor>().cameraleft.enabled = false;
 		this.GetComponentInChildren<OpenDiveSensor>().cameraright.enabled = false;
-		
+
 	}
-	
+
+
+
 	// Update is called once per frame
 	void Update () {
 		if (isControllable) {
-						if (Time.time < 1)
-								resetMyoOrientation ();
-		
-						Vector3 newEulerAngles = myo.transform.rotation.eulerAngles;
+			if (Time.time < 1)
+					resetMyoOrientation ();
+
+			if (messageManager.GetMyoRotation() != Vector3.zero)
+			    newEulerAngles = messageManager.GetMyoRotation();
+			else
+				newEulerAngles = myo.transform.rotation.eulerAngles;
+
 						if (newEulerAngles.x > 180)
 								newEulerAngles.x = newEulerAngles.x - 360;
 						if (newEulerAngles.y > 180)

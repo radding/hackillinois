@@ -12,7 +12,7 @@ public class Lazer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 			if(move)
-			transform.Translate(transform.forward * 100 * Time.deltaTime);
+			transform.position += (transform.forward * 100 * Time.deltaTime);
 	}
 
 	public void moved(){
